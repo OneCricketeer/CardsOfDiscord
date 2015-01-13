@@ -1,0 +1,4 @@
+<!-- Ignore the ObsoleteLayoutParam issue in the given files -->
+ <issue id="PropertyEscape">
+ <ignore path="local.properties" />
+ </issue>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/menu_change_name"
+        android:title="@string/change_name">
+    </item>
+    <item
+        android:id="@+id/menu_legal"
+        android:title="@string/legal">
+    </item>
+
+</menu>
