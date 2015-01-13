@@ -11,12 +11,18 @@
 # Generated files
 bin/
 gen/
+tmp/
+*.tmp
+*.bak
+*.swp
 
 # Gradle files
 .gradle/
 build/
 /*/build/
-/gradle-app.setting 
+/gradle-app.setting
+.idea/gradle.xml
+.idea/libraries
 
 # Local configuration file (sdk path, etc)
 local.properties
@@ -27,10 +33,26 @@ proguard/
 # Log Files
 *.log
 
-# Android Studio
+# Eclipse Metadata
+.metadata
+
+# Locally stored "Eclipse launch configurations"
+*.launch
+
+# Mac OS X clutter
+*.DS_Store
+
+# Windows clutter
+Thumbs.db
+
+# Intellij IDEA (see https://intellij-support.jetbrains.com/entries/23393067)
+*.iml
 .idea/workspace.xml
+.idea/tasks.xml
+.idea/dictionaries
+.idea/datasources.xml
+.idea/dataSources.ids
 
 # Additional
 .*.md.html  
-.DS_Store
-  
+.settings/
