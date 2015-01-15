@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">CardsOfDiscord</string>
-    <string name="cards_of_discord">Cards of Discord</string>
+    <string name="app_name">Cards Of Discord</string>
     <string name="cards">Cards</string>
     <string name="of">of</string>
     <string name="discord">Discord</string>
+    <string name="harmony">Harmony</string>
     <string name="descr_overflow_button">Menu</string>
     <string name="change_name">Change Name</string>
     <string name="legal">Legal</string>

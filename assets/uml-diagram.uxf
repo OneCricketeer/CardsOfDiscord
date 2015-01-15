@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="13.1">
+  <zoom_level>9</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>90</x>
+      <y>324</y>
+      <w>171</w>
+      <h>162</h>
+    </coordinates>
+    <panel_attributes>Deck
+--
+- wcards[] : Card
+- bcards[ ] : Card
+--
++ getCardById(int id) : Card
++ drawWhiteCard() : Card
++ drawBlackCard() : Card
+- shuffle() : void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>90</x>
+      <y>108</y>
+      <w>162</w>
+      <h>171</h>
+    </coordinates>
+    <panel_attributes>Card
+--
+- id : int
+- isBlack : boolean
+- isMature : boolean
+- content : String
+--
++ isBlack() : boolean
++ isMature() : boolean
++ getContent() : String</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>468</x>
+      <y>225</y>
+      <w>288</w>
+      <h>198</h>
+    </coordinates>
+    <panel_attributes>GameController
+--
+- cardManager : CardManager
+- turnManager : TurnManager
+- gameMode : GameMode
+- players[] : Player[ ]
+--
++ getScores() : Player[ ]
+- nextRound() : void
++ withPlayers(Player[ ] players) : GameController
++ getCurrentPlayer() : Player
++ getTurnCards() : Card[ ]
++ playCard(Player p, Card c) : void
+- isGameOver() : boolean</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>603</x>
+      <y>468</y>
+      <w>207</w>
+      <h>144</h>
+    </coordinates>
+    <panel_attributes>TurnManager
+--
+- currentPlayerIndex : int
+- judgePlayerIndex : int
+--
++ getCurrentPlayer() : Player
++ getCurrentJudge() : Player
++ rotatePlayers() : void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>306</x>
+      <y>468</y>
+      <w>225</w>
+      <h>189</h>
+    </coordinates>
+    <panel_attributes>CardManager
+--
+- deck : Deck
+- judgeOptions[ ] : Card
+- bcard : Card
+--
++ getDeck() : Deck
++ drawWhiteCard() : Card
++ drawBlackCard() : Card
++ getJudgeOptions() : Card[]
++ getCurrentBlackCard() : Card</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>864</x>
+      <y>207</y>
+      <w>279</w>
+      <h>315</h>
+    </coordinates>
+    <panel_attributes>Player
+--
+- bcard : Card
+- hand[ ] : Card[ ]
+- name : String
+--
++ getName() : String
++ setName(String name) : void
++ getScore() : int
++ incrementScore() : void
++ drawWhiteCard(CardManager cm) : Card
++ drawBlackCard(CardManager cm) : Card
++ getHand() : Card[ ] 
++ playCard(Card c) : void </panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>369</x>
+      <y>135</y>
+      <w>189</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>GameMode
+--
+PASS_PLAY
+LIVE
+TURN</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>153</x>
+      <y>270</y>
+      <w>27</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>747</x>
+      <y>324</y>
+      <w>135</w>
+      <h>27</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;130.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>405</x>
+      <y>198</y>
+      <w>81</w>
+      <h>108</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>70.0;100.0;10.0;100.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>657</x>
+      <y>414</y>
+      <w>27</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>504</x>
+      <y>414</y>
+      <w>27</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>171</x>
+      <y>477</y>
+      <w>153</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>150.0;80.0;10.0;80.0;10.0;10.0</additional_attributes>
+  </element>
+</diagram>

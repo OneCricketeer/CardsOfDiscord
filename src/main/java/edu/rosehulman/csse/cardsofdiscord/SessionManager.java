@@ -41,6 +41,8 @@ public class SessionManager {
 	// Sharedpref login state
 	public static final String LOGGED_IN = "edu.rosehulman.csse.cardsofdiscord.preferences.isLoggedIn";
 
+	public static final String DISCORD_MODE = "edu.rosehulman.csse.cardsofdiscord.preferences.discord";
+
 	/**
 	 * Gets a singleton instance of the session manager
 	 *
@@ -88,6 +90,16 @@ public class SessionManager {
 
 	public synchronized static String getUserID() {
 		return SessionManager.getInstance().getUserDetails().get(KEY_USERID);
+	}
+
+	public synchronized boolean isDiscordMode() {
+		return mPrefs.getBoolean(DISCORD_MODE, true);
+	}
+
+	public synchronized void setDiscordMode(boolean discordMode) {
+		Editor editor = mPrefs.edit();
+		editor.putBoolean(DISCORD_MODE, discordMode);
+		editor.commit();
 	}
 
 	public synchronized void clear() {
