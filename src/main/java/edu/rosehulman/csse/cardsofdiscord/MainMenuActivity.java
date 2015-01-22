@@ -1,10 +1,10 @@
 package edu.rosehulman.csse.cardsofdiscord;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
+import edu.rosehulman.csse.cardsofdiscord.dialogs.ChangeNameDialog;
+import edu.rosehulman.csse.cardsofdiscord.dialogs.LegalDialog;
+import edu.rosehulman.csse.cardsofdiscord.utils.SessionManager;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -13,30 +13,61 @@ import android.widget.PopupMenu;
 import android.widget.PopupMenu.OnMenuItemClickListener;
 import android.widget.Toast;
 
-public class MainMenuActivity extends Activity implements View.OnClickListener, OnMenuItemClickListener {
-
+public class MainMenuActivity extends BaseActivity implements View.OnClickListener, OnMenuItemClickListener, ChangeNameDialog.OnChangeUsernameListener {
+	private final String TAG = MainMenuActivity.class.getSimpleName();
     private MainTitleView mTitleView;
+    
+    private int counter = 0;
+	private CircleView cv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
-        findViewById(R.id.main_menu_menu_button).setOnClickListener(this);
-        findViewById(R.id.button1).setOnClickListener(this);
         mTitleView = (MainTitleView) findViewById(R.id.title_layout);
-        Log.d("main-menu", mTitleView.toString());
+        mTitleView.setDiscordMode(mPrefs.isDiscordMode());
+        enableButtons();
+        
+        this.cv = (CircleView) findViewById(R.id.circleView1);
+        cv.setPlayerName("T");
+        cv.setPlayerScore(0);
+        
+        if (!this.mPrefs.isLoggedIn()) {
+        	new ChangeNameDialog().show(getFragmentManager(), "change-name-dialog");
+        } else {
+        	Toast.makeText(this, "Welcome " + mPrefs.getUserDetails().get(SessionManager.USER), Toast.LENGTH_SHORT).show();
+        }
+        
     }
+
+	private void enableButtons() {
+		findViewById(R.id.main_menu_menu_button).setOnClickListener(this);
+        findViewById(R.id.pnp_button).setOnClickListener(this);
+        findViewById(R.id.lan_button).setOnClickListener(this);
+        findViewById(R.id.online_game_button).setOnClickListener(this);
+        findViewById(R.id.how_play_button).setOnClickListener(this);
+	}
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.main_menu_menu_button:
                 showPopupMenu(v);
-                break;
-            case R.id.button1:
-                Log.d("main-menu", "click");
-                mTitleView.setDiscordMode(false);
+            	break;
+            case R.id.pnp_button:
+            	Log.i(TAG, "Pass and play");
+            	break;
+            case R.id.lan_button:
+            	Log.i(TAG, "LAN Game");
+            	break;
+            case R.id.online_game_button:
+            	Log.i(TAG, "Online Game");
+            	break;
+            case R.id.how_play_button:
+            	Log.i(TAG, "How to play");
+            	break;
+            default:
                 break;
         }
 
@@ -54,26 +85,21 @@ public class MainMenuActivity extends Activity implements View.OnClickListener, 
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_change_name:
-                Toast.makeText(this, "Change name", Toast.LENGTH_SHORT).show();
+                new ChangeNameDialog().show(getFragmentManager(), "change-name-dialog");
                 break;
             case R.id.menu_legal:
-                DialogFragment df = new DialogFragment() {
-                    @Override
-                    public Dialog onCreateDialog(Bundle savedInstanceState) {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                        builder.setTitle(R.string.legal);
-                        builder.setMessage("blah blah blah");
-                        return builder.create();
-                    }
-
-                    ;
-                };
-                df.show(getFragmentManager(), "legal-dialog");
+            	new LegalDialog().show(getFragmentManager(), "legal-dialog");
                 break;
             default:
                 break;
         }
         return false;
     }
+
+	@Override
+	public void onChangeUsername(String name) {
+		this.mPrefs.createLoginSession(name);
+		
+	}
 
 }

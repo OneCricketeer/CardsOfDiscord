@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    
+     <!--
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+
+
+    -->
+    <style name="AppBaseTheme" parent="android:Theme.Holo">
+
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+
+        -->
+        <item name="android:background">@color/black</item>
+    </style>
+
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+
+    </style>
+
+    <style name="AppTheme.NoTitle" parent="@android:style/Theme.NoTitleBar">
+    </style>
+
+    <style name="Theme.Black" parent="AppTheme.NoTitle">
+        <item name="android:background">@color/black</item>
+    </style>
+
+    <style name="Theme.White" parent="AppTheme.NoTitle">
+        <item name="android:background">@color/white</item>
+    </style>
+    
+    <style name="Theme.Green" parent="AppTheme.NoTitle">
+        <item name="android:background">@color/green</item>
+    </style>
+    
+    <style name="Theme.Red" parent="AppTheme.NoTitle">
+        <item name="android:background">@color/red</item>
+    </style>
+
+</resources>

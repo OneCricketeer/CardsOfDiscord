@@ -13,13 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ******************************************************************************/
-package edu.rosehulman.csse.cardsofdiscord;
+package edu.rosehulman.csse.cardsofdiscord.utils;
 
 import java.util.HashMap;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.text.TextUtils;
 
 // http://stackoverflow.com/a/19613702
 public class SessionManager {
@@ -35,11 +36,11 @@ public class SessionManager {
 			.getSimpleName();
 
 	// User details
-	public static final String KEY_USERID = "edu.rosehulman.csse.cardsofdiscord.preferences.userID";
+//	public static final String KEY_USERID = "edu.rosehulman.csse.cardsofdiscord.preferences.userID";
 	public static final String USER = "edu.rosehulman.csse.cardsofdiscord.preferences.username";
 
 	// Sharedpref login state
-	public static final String LOGGED_IN = "edu.rosehulman.csse.cardsofdiscord.preferences.isLoggedIn";
+//	public static final String LOGGED_IN = "edu.rosehulman.csse.cardsofdiscord.preferences.isLoggedIn";
 
 	public static final String DISCORD_MODE = "edu.rosehulman.csse.cardsofdiscord.preferences.discord";
 
@@ -69,9 +70,9 @@ public class SessionManager {
 	 * */
 	public synchronized void createLoginSession(String userID) {
 		Editor editor = mPrefs.edit();
-		editor.putString(USER, "user");
-		editor.putString(KEY_USERID, userID);
-		editor.putBoolean(LOGGED_IN, true);
+		editor.putString(USER, userID);
+//		editor.putString(KEY_USERID, userID);
+//		editor.putBoolean(LOGGED_IN, true);
 		// commit changes
 		editor.commit();
 	}
@@ -82,15 +83,15 @@ public class SessionManager {
 	public synchronized HashMap<String, String> getUserDetails() {
 		HashMap<String, String> details = new HashMap<String, String>();
 
-		details.put(KEY_USERID, mPrefs.getString(KEY_USERID, null));
+//		details.put(KEY_USERID, mPrefs.getString(KEY_USERID, null));
 		details.put(USER, mPrefs.getString(USER, null));
 		
 		return details;
 	}
 
-	public synchronized static String getUserID() {
-		return SessionManager.getInstance().getUserDetails().get(KEY_USERID);
-	}
+//	public synchronized static String getUserID() {
+//		return SessionManager.getInstance().getUserDetails().get(KEY_USERID);
+//	}
 
 	public synchronized boolean isDiscordMode() {
 		return mPrefs.getBoolean(DISCORD_MODE, true);
@@ -113,7 +114,7 @@ public class SessionManager {
 	}
 
 	public synchronized boolean isLoggedIn() {
-		return mPrefs.getBoolean(LOGGED_IN, false);
+		return !TextUtils.isEmpty(mPrefs.getString(USER, null));
 	}
 
 	

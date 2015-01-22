@@ -12,6 +12,4 @@
 
     <style name="Theme.NoTitle" parent="@android:style/Theme.Black.NoTitleBar"></style>
 
-    <style name="Theme.FullScreen" parent="@android:style/Theme.Black.NoTitleBar.Fullscreen"></style>
-
 </resources>

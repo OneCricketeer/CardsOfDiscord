@@ -11,31 +11,46 @@
             android:layout_width="match_parent" />
 
     <Button
-            android:id="@+id/button1"
+            android:id="@+id/pnp_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/title_layout"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="40dp"
-            android:text="Button1"/>
+            android:text="@string/pass_and_play"/>
 
     <Button
-            android:id="@+id/button2"
-            android:layout_width="wrap_content"
+            android:id="@+id/lan_button"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/button1"
+            android:layout_below="@+id/pnp_button"
+            android:layout_alignLeft="@+id/pnp_button"
+            android:layout_alignRight="@+id/pnp_button"
             android:layout_marginTop="16dp"
-            android:text="Button2"/>
+            android:text="@string/lan_game"/>
 
     <Button
-            android:id="@+id/button3"
-            android:layout_width="wrap_content"
+            android:id="@+id/online_game_button"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/button2"
+            android:layout_below="@+id/lan_button"
+            android:layout_alignLeft="@+id/pnp_button"
+            android:layout_alignRight="@+id/pnp_button"
             android:layout_marginTop="16dp"
-            android:text="Button3"/>
+            android:text="@string/online_game"/>
+    
+    <Button
+            android:id="@+id/how_play_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/online_game_button"
+            android:layout_alignLeft="@+id/pnp_button"
+            android:layout_alignRight="@+id/pnp_button"
+            android:layout_marginTop="16dp"
+            android:text="@string/how_to_play"/>
 
     <ImageButton
             android:id="@+id/main_menu_menu_button"
@@ -47,5 +62,21 @@
             android:background="@null"
             android:contentDescription="@string/descr_overflow_button"
             android:src="@drawable/ic_action_overflow"/>
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="@string/adapted_for_android" />
+
+    <edu.rosehulman.csse.cardsofdiscord.CircleView
+        android:id="@+id/circleView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView1"
+        android:layout_marginBottom="99dp" >
+    </edu.rosehulman.csse.cardsofdiscord.CircleView>
 
 </RelativeLayout>
