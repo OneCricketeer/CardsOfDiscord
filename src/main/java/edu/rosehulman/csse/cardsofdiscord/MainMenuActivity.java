@@ -1,10 +1,12 @@
 package edu.rosehulman.csse.cardsofdiscord;
 
-import edu.rosehulman.csse.cardsofdiscord.dialogs.ChangeNameDialog;
-import edu.rosehulman.csse.cardsofdiscord.dialogs.LegalDialog;
-import edu.rosehulman.csse.cardsofdiscord.utils.SessionManager;
+import edu.rosehulman.csse.cardsofdiscord.dialog.ChangeNameDialog;
+import edu.rosehulman.csse.cardsofdiscord.dialog.LegalDialog;
+import edu.rosehulman.csse.cardsofdiscord.util.SessionManager;
+import edu.rosehulman.csse.cardsofdiscord.view.MainTitleView;
+
+import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -16,9 +18,6 @@ import android.widget.Toast;
 public class MainMenuActivity extends BaseActivity implements View.OnClickListener, OnMenuItemClickListener, ChangeNameDialog.OnChangeUsernameListener {
 	private final String TAG = MainMenuActivity.class.getSimpleName();
     private MainTitleView mTitleView;
-    
-    private int counter = 0;
-	private CircleView cv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,11 +27,7 @@ public class MainMenuActivity extends BaseActivity implements View.OnClickListen
         mTitleView = (MainTitleView) findViewById(R.id.title_layout);
         mTitleView.setDiscordMode(mPrefs.isDiscordMode());
         enableButtons();
-        
-        this.cv = (CircleView) findViewById(R.id.circleView1);
-        cv.setPlayerName("T");
-        cv.setPlayerScore(0);
-        
+
         if (!this.mPrefs.isLoggedIn()) {
         	new ChangeNameDialog().show(getFragmentManager(), "change-name-dialog");
         } else {
@@ -57,6 +52,9 @@ public class MainMenuActivity extends BaseActivity implements View.OnClickListen
             	break;
             case R.id.pnp_button:
             	Log.i(TAG, "Pass and play");
+                Intent intent = new Intent(MainMenuActivity.this, EnterNamesActivity.class);
+
+                startActivity(intent);
             	break;
             case R.id.lan_button:
             	Log.i(TAG, "LAN Game");

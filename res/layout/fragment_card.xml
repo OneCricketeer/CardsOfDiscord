@@ -1,0 +1,35 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="edu.rosehulman.csse.cardsofdiscord.CardFragment" >
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:paddingLeft="28dp"
+        android:paddingRight="28dp"
+        android:src="@color/white" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:src="@drawable/rounded_corner" />
+
+    <TextView
+        android:id="@+id/white_card_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="48dp"
+        android:layout_marginRight="48dp"
+        android:text="@string/hello_blank_fragment"
+        android:textColor="@color/black"
+        android:textSize="22sp" />
+
+</FrameLayout>

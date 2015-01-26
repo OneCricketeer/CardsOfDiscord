@@ -20,7 +20,7 @@
         android:id="@+id/names_list_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="26dp"
+        android:layout_marginTop="36dp"
         android:layout_below="@+id/textView1"
         android:orientation="vertical" >
 
@@ -59,7 +59,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/add_player_button"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="113dp"
+        android:layout_marginBottom="80dp"
         android:text="@string/start_game" />
 
 

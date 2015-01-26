@@ -24,5 +24,13 @@
     <string name="hand_the_device">Hand the device to %1$s</string>
     <string name="username">Username</string>
     <string name="set_name">Set Name</string>
+    <string name="remove_player">Remove Player</string>
+    <string name="title_activity_game">GameActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="max_players">There is a maximum of %1$d players per game</string>
+    <string name="player_names_not_blank">Player names cannot be blank</string>
+    <string name="player_names_unique">Player names must be unique</string>
+    <string name="black_card_text">Black Card Text</string>
+    <string name="favorite_food_truck">My favorite food truck is _____.</string>
 
 </resources>

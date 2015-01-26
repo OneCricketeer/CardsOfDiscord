@@ -1,14 +1,15 @@
-package edu.rosehulman.csse.cardsofdiscord;
+package edu.rosehulman.csse.cardsofdiscord.view;
 
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.GradientDrawable;
 import android.util.AttributeSet;
 import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import edu.rosehulman.csse.cardsofdiscord.R;
 
 public class CircleView extends RelativeLayout {
 
@@ -33,22 +34,21 @@ public class CircleView extends RelativeLayout {
 				R.drawable.circle_drawable);
 		this.mScoreCircle = (GradientDrawable) getResources().getDrawable(
 				R.drawable.circle_drawable);
-		this.mScoreCircle.setColor(getResources().getColor(R.color.red));
+
+		this.mPlayerCircle.setColor(getResources().getColor(R.color.white));
+        this.mScoreCircle.setColor(getResources().getColor(R.color.red));
 
 		LayoutInflater.from(mContext).inflate(R.layout.player_circle_view,
 				this, true);
+        
+        mPlayerName = (TextView) findViewById(R.id.playerNameViewId);
+        mPlayerScore = (TextView) findViewById(R.id.playerScore);
 
-		LayoutParams params = new RelativeLayout.LayoutParams(context, attrs);
-		this.setLayoutParams(params);
-
-		addPlayerCircleView();
-		addScoreCircleView();
-		
-		setBackground(null);
-		setPlayerName("?");
-		setPlayerScore(0);
+		updatePlayerCircleView();
+		updateScoreCircleView();
 		
 	}
+
 
 	private int SP_to_PX(int sp) {
 		Resources r = mContext.getResources();
@@ -56,43 +56,28 @@ public class CircleView extends RelativeLayout {
 				r.getDisplayMetrics());
 	}
 
-	private void addPlayerCircleView() {
-		mPlayerName = new TextView(mContext);
-		mPlayerName.setId(R.id.playerNameViewId);
+	private void updatePlayerCircleView() {
 		mPlayerName.setBackground(mPlayerCircle);
-		mPlayerName.setGravity(Gravity.CENTER);
-		Resources r = mContext.getResources();
-		mPlayerName.setTextColor(r.getColor(R.color.black));
 		int w = SP_to_PX(RADIUS);
 		LayoutParams lp = new RelativeLayout.LayoutParams(w, w);
 		int padd = RADIUS / 4;
 		lp.setMargins(0, padd, padd, 0);
 		mPlayerName.setLayoutParams(lp);
-		addView(mPlayerName);
 	}
 
-	private void addScoreCircleView() {
-		mPlayerScore = new TextView(mContext);
-		mPlayerScore.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
-		mPlayerScore.setGravity(Gravity.CENTER);
-		Resources r = mContext.getResources();
+	private void updateScoreCircleView() {
 		mPlayerScore.setBackground(mScoreCircle);
-//		mPlayerScore.setBackgroundColor(r.getColor(R.color.red));
-		mPlayerScore.setTextColor(r.getColor(R.color.white));
+
 		mPlayerScore.setPadding(0, 0, 0, 4);
 		int w = SP_to_PX(RADIUS / 2);
 		LayoutParams lp = new RelativeLayout.LayoutParams(w, w);
-		// int id = mPlayerName.getId();
-		int id = R.id.player_circle_root_view;
-//		lp.addRule(ALIGN_TOP, mPlayerName.getId());
+
 		lp.addRule(ALIGN_RIGHT, mPlayerName.getId());
 
 		int padd = -RADIUS / 4;
 		lp.setMargins(0, 0, padd, 0);
-		 lp.addRule(ALIGN_PARENT_TOP, RelativeLayout.TRUE);
-		// lp.addRule(ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
+
 		mPlayerScore.setLayoutParams(lp);
-		addView(mPlayerScore);
 	}
 
 	public void setPlayerName(String name) {

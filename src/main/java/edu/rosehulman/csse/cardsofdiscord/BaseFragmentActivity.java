@@ -3,15 +3,16 @@ package edu.rosehulman.csse.cardsofdiscord;
 import android.app.Activity;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 
 import edu.rosehulman.csse.cardsofdiscord.util.SessionManager;
 
-public abstract class BaseActivity extends Activity {
+public abstract class BaseFragmentActivity extends FragmentActivity {
 
     protected final SessionManager mPrefs;
 
-    public BaseActivity() {
+    public BaseFragmentActivity() {
         this.mPrefs = SessionManager.getInstance();
     }
 

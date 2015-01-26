@@ -1,4 +1,4 @@
-package edu.rosehulman.csse.cardsofdiscord;
+package edu.rosehulman.csse.cardsofdiscord.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import edu.rosehulman.csse.cardsofdiscord.R;
 
 public class MainTitleView extends LinearLayout {
     private final Context mContext;

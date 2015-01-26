@@ -1,7 +1,7 @@
-package edu.rosehulman.csse.cardsofdiscord.dialogs;
+package edu.rosehulman.csse.cardsofdiscord.dialog;
 
 import edu.rosehulman.csse.cardsofdiscord.R;
-import edu.rosehulman.csse.cardsofdiscord.R.string;
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;

@@ -1,7 +1,7 @@
-package edu.rosehulman.csse.cardsofdiscord.utils;
+package edu.rosehulman.csse.cardsofdiscord.util;
 
 import edu.rosehulman.csse.cardsofdiscord.R;
-import edu.rosehulman.csse.cardsofdiscord.R.style;
+
 import android.app.Activity;
 import android.app.Application;
 import android.content.Intent;

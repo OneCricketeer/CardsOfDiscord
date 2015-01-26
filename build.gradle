@@ -1,16 +1,15 @@
 buildscript {
     repositories {
-        mavenCentral()
+        jcenter()
+       // mavenCentral()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:1.0.0'
     }
 }
 apply plugin: 'com.android.application'
+// apply plugin: 'maven'
 
-dependencies {
-    compile fileTree(dir: 'libs', include: '*.jar')
-}
 
 android {
     compileSdkVersion 21
@@ -41,4 +40,10 @@ android {
      lintOptions {
        // abortOnError false
     }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: '*.jar')
+    // compile 'com.android.support:support-v4:21.0.+'
+    //  compile 'com.ToxicBakery.viewpager.transforms:view-pager-transforms:1.0.0@aar'
 }
