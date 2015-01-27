@@ -26,7 +26,12 @@ public class CardPagerAdapter extends FragmentStatePagerAdapter {
 		return CardFragment.newInstance(content);
 	}
 
-	@Override
+    @Override
+    public float getPageWidth(int position) {
+        return 0.9f;
+    }
+
+    @Override
 	public int getCount() {
 		return mWhiteCards == null ? 0 : mWhiteCards.size();
 	}
