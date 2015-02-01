@@ -1,7 +1,8 @@
 apply plugin: 'com.android.application'
 buildscript {
     repositories {
-        maven { url 'http://repo1.maven.org/maven2' }
+    //    maven { url 'http://repo1.maven.org/maven2' }
+    	jcenter()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:1.0.0'
@@ -9,8 +10,10 @@ buildscript {
 }
 
 repositories {
-    mavenCentral()
+    jcenter()
 }
+
+apply plugin: 'eclipse'
 
 android {
     compileSdkVersion 21
@@ -62,6 +65,46 @@ dependencies {
         [group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.5.0'],
         [group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.5.0'],
         [group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.5.0']
-    )
-    //  compile 'com.ToxicBakery.viewpager.transforms:view-pager-transforms:1.0.0@aar'
+   )
 }
+
+task copyLibs(type: Copy) {
+    from configurations.compile
+    into 'libs'
+}
+
+/*
+// Eclipse Junk
+ eclipse.classpath.plusConfigurations += configurations.compile
+
+ eclipse.classpath.file {
+    beforeMerged { classpath ->
+    classpath.entries.removeAll() { c -> 
+        c.kind == 'src'
+    }
+}
+
+withXml {
+    def node = it.asNode()
+
+    node.appendNode('classpathentry kind="src" path="src/main/java"')
+    node.appendNode('classpathentry kind="src" path="src/debug/java"')
+    node.appendNode('classpathentry kind="src" path="gen"')
+
+    node.children().removeAll() { c ->
+        def path = c.attribute('path')
+        path != null
+    }
+  }
+}
+
+eclipse.project {
+   name = 'CardsOfDiscord'
+
+   natures 'com.android.ide.eclipse.adt.AndroidNature'
+   buildCommand 'com.android.ide.eclipse.adt.ResourceManagerBuilder'
+   buildCommand 'com.android.ide.eclipse.adt.PreCompilerBuilder'
+   buildCommand 'com.android.ide.eclipse.adt.ApkBuilder'
+}
+*/
+
