@@ -1,23 +1,22 @@
 package edu.rosehulman.csse.cardsofdiscord;
 
-import android.content.Intent;
+import java.util.ArrayList;
+
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
-
-import java.util.ArrayList;
-import java.util.Collections;
+import edu.rosehulman.csse.cardsofdiscord.CardSelectionFragment.OnFragmentInteractionListener;
+import edu.rosehulman.csse.cardsofdiscord.model.Card;
+import edu.rosehulman.csse.cardsofdiscord.model.Player;
 
 public class GameActivity extends BaseFragmentActivity implements
-		HandDeviceFragment.OnDeviceHandedListener {
-
-	public static final String KEY_PLAYER_NAMES = "KEY_PLAYER_NAMES";
-
-	private ArrayList<String> mPlayerNames;
-
-	private int mCurrentPlayerIndex;
+		HandDeviceFragment.OnDeviceHandedListener,
+		OnFragmentInteractionListener {
 
 	public static final int STATE_HAND_DEVICE = 0;
 	public static final int STATE_CARD_SELECT = 1;
@@ -29,18 +28,10 @@ public class GameActivity extends BaseFragmentActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_game);
 
-		Intent callingIntent = getIntent();
-		if (callingIntent.getExtras() != null) {
-			Bundle extras = callingIntent.getExtras();
-			mPlayerNames = extras.getStringArrayList(KEY_PLAYER_NAMES);
-		} else {
-			mPlayerNames = new ArrayList<String>();
-		}
-
 		Fragment f = null;
 		switch (mState) {
 		case STATE_HAND_DEVICE:
-			if (!mPlayerNames.isEmpty()) {
+			if (!mGameController.getPlayers().isEmpty()) {
 				f = HandDeviceFragment.newInstance(getCurrentPlayerName());
 			}
 			break;
@@ -59,12 +50,12 @@ public class GameActivity extends BaseFragmentActivity implements
 
 	}
 
-	public ArrayList<String> getPlayerNames() {
-		return mPlayerNames;
+	public ArrayList<Player> getPlayers() {
+		return mGameController.getPlayers();
 	}
 
 	private String getCurrentPlayerName() {
-		return mPlayerNames.get(mCurrentPlayerIndex);
+		return mGameController.getCurrentPlayer().getName();
 	}
 
 	@Override
@@ -78,28 +69,21 @@ public class GameActivity extends BaseFragmentActivity implements
 				getBlackCard(), getWhiteCards());
 		ft.replace(R.id.container, f);
 		ft.commit();
+		if (mGameController.isJudging()) {
+			Crouton.makeText(this, "You are Judging.", Style.INFO).show();
+		}
 	}
 
-	private ArrayList<String> getWhiteCards() {
-		ArrayList<String> cards = new ArrayList<String>();
-		cards.add("Getting naked and watching Nickelodeon.");
-		cards.add("Authentic Mexican cuisine.");
-		cards.add("A time travel paradox.");
-		cards.add("The Hamburgular.");
-		cards.add("Being a busy adult with many important things to do.");
-		cards.add("The economy.");
-		cards.add("Ryan Gosling riding in on a white horse.");
-
-		Collections.shuffle(cards);
-		return cards;
+	private ArrayList<Card> getWhiteCards() {
+		return mGameController.getCurrentHand();
 	}
 
-	private String getBlackCard() {
-		return getString(R.string.favorite_food_truck);
+	private Card getBlackCard() {
+		return mGameController.getBlackCard();
 	}
 
-	public void onCardsSelected() {
-		++mCurrentPlayerIndex;
+	public void onCardsSelected(Card card) {
+		mGameController.playCard(card);
 		mState = STATE_HAND_DEVICE;
 		FragmentManager fm = getSupportFragmentManager();
 		FragmentTransaction ft = fm.beginTransaction();

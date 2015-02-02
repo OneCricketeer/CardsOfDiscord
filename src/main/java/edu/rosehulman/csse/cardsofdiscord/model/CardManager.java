@@ -20,6 +20,7 @@ public class CardManager {
 	private Deck mDeck;
 	private ArrayList<Card> mJudgeOptions;
 	private Card mBlackcard;
+	public static final int HAND_SIZE = 7;
 
 	public CardManager() {
 		mJudgeOptions = new ArrayList<Card>();
@@ -27,14 +28,14 @@ public class CardManager {
 	}
 
 	private void populateCards() {
-		boolean isMature = SessionManager.getInstance().isDiscordMode();
+		boolean discordMode = SessionManager.getInstance().isDiscordMode();
 
 		ObjectMapper mapper = JsonUtils.getObjectMapper();
 
 		JsonNode root = null;
 		try {
 			File f = ApplicationController.getAssetFile("cards.json");
-			root = mapper.readTree(f.getPath());
+			root = mapper.readTree(f);
 		} catch (IOException e) {
 			Log.e(JSON, e.getLocalizedMessage());
 		} catch (RuntimeException e) {
@@ -50,11 +51,10 @@ public class CardManager {
 			if (bCards != null && bCards.isArray()) {
 				for (final JsonNode bCard : bCards) {
 					int id = bCard.get("id").asInt();
-					boolean mature = (bCard.get("maturity").asInt() == 1);
-					String content = "<html>" + bCard.get("content").asText()
-							+ "</html>";
-					if (mature != isMature) {
-						bCardsList.add(new Card(id, true, mature, content));
+					boolean cardMaturity = (bCard.get("maturity").asInt() == 1);
+					String content = bCard.get("content").asText();
+					if (discordMode || !cardMaturity) {
+						bCardsList.add(new Card(id, true, cardMaturity, content));
 					}
 				}
 			} else {
@@ -64,11 +64,10 @@ public class CardManager {
 			if (wCards != null && wCards.isArray()) {
 				for (final JsonNode wCard : wCards) {
 					int id = wCard.get("id").asInt();
-					boolean mature = (wCard.get("maturity").asInt() == 1);
-					String content = "<html>" + wCard.get("content").asText()
-							+ "</html>";
-					if (mature != isMature) {
-						wCardsList.add(new Card(id, false, mature, content));
+					boolean cardMaturity = (wCard.get("maturity").asInt() == 1);
+					String content = wCard.get("content").asText();
+					if (discordMode || !cardMaturity) {
+						wCardsList.add(new Card(id, false, cardMaturity, content));
 					}
 				}
 			} else {

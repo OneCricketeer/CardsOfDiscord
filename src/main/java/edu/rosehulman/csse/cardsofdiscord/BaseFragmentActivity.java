@@ -6,11 +6,14 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 
+import edu.rosehulman.csse.cardsofdiscord.model.GameController;
+import edu.rosehulman.csse.cardsofdiscord.util.ApplicationController;
 import edu.rosehulman.csse.cardsofdiscord.util.SessionManager;
 
 public abstract class BaseFragmentActivity extends FragmentActivity {
 
     protected final SessionManager mPrefs;
+	protected GameController mGameController;
 
     public BaseFragmentActivity() {
         this.mPrefs = SessionManager.getInstance();
@@ -19,6 +22,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mGameController = ApplicationController.getGameController();
         final View v = this.getWindow().getDecorView();
         Resources r = getResources();
         if (mPrefs.isDiscordMode()) {

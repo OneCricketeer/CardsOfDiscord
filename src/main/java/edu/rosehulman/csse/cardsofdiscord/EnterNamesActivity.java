@@ -1,5 +1,9 @@
 package edu.rosehulman.csse.cardsofdiscord;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -10,10 +14,8 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
+import edu.rosehulman.csse.cardsofdiscord.model.GameController;
+import edu.rosehulman.csse.cardsofdiscord.util.ApplicationController;
 
 public class EnterNamesActivity extends BaseActivity implements View.OnClickListener {
     private static final String TAG = EnterNamesActivity.class.getSimpleName();
@@ -82,7 +84,9 @@ public class EnterNamesActivity extends BaseActivity implements View.OnClickList
                 ArrayList<String> names = getPlayerNames();
                 if (names != null) {
                     Intent intent = new Intent(this, GameActivity.class);
-                    intent.putStringArrayListExtra(GameActivity.KEY_PLAYER_NAMES, names);
+                    GameController gc = ApplicationController.getGameController();
+                    gc.newGame(names);
+                    //intent.putStringArrayListExtra(GameActivity.KEY_PLAYER_NAMES, names);
                     startActivity(intent);
                 }
                 break;
