@@ -24,6 +24,7 @@ public class GameController {
 	private void dealCards() {
 		try {
 			for (Player p : mTm.getPlayers()) {
+				p.getHand().clear();
 				for (int i = 0; i < CardManager.HAND_SIZE; i++) {
 					p.addCard(mCm.drawWhiteCard());
 				}
@@ -40,6 +41,10 @@ public class GameController {
 	
 	public boolean isJudging() {
 		return mTm.getCurrentJudge().equals(getCurrentPlayer());
+	}
+	
+	public boolean isJudging(Player p) {
+		return mTm.getCurrentJudge().equals(p);
 	}
 
 	public ArrayList<Card> getCurrentHand() {
@@ -59,7 +64,6 @@ public class GameController {
 		if (mTm.getCurrentJudge().equals(mTm.getCurrentPlayer())) {
 			try {
 				for (Player p : mTm.getPlayers()) {
-					isGameOver = isGameOver || p.getScore() >= WINNING_SCORE;
 					if (!mTm.getCurrentJudge().equals(p)) {
 						for (Card c : mCm.getJudgeOptions()) {
 							if (p.getHand().contains(c)) {
@@ -71,6 +75,7 @@ public class GameController {
 							}
 						}
 					}
+					isGameOver = isGameOver || p.getScore() >= WINNING_SCORE;
 				}
 
 				mCm.drawBlackCard();
@@ -89,8 +94,30 @@ public class GameController {
 	public boolean isGameOver() {
 		return isGameOver;
 	}
+	
+	public ArrayList<Player> getWinners(){
+		int maxScore = Integer.MIN_VALUE;
+		for(Player p : mTm.getPlayers()){
+			maxScore = Math.max(maxScore, p.getScore());
+		}
+		ArrayList<Player> winners = new ArrayList<Player>();
+		for(Player p : mTm.getPlayers()){
+			if (p.getScore() == maxScore){
+				winners.add(p);
+			}
+		}
+		
+		return winners;
+	}
 
 	public Card getBlackCard() {
 		return mCm.getCurrentBlackCard();
+	}
+
+	public void playAgain() {
+		isGameOver = false;
+		mTm.resetPlayers();
+		mCm.reset();
+		dealCards();
 	}
 }

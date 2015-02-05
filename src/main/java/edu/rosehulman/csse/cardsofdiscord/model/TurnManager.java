@@ -14,10 +14,14 @@ public class TurnManager {
 		for(String name : playerNames){
 			mPlayers.add(new Player(name));
 		}
+		randomizePlayers();
+		
+	}
+
+	private void randomizePlayers() {
 		Random r = new Random();
 		mJudgePlayerIndex = r.nextInt(mPlayers.size());
 		mCurrentPlayerIndex = (mJudgePlayerIndex + 1) % mPlayers.size();
-		
 	}
 	
 	public Player getCurrentPlayer(){
@@ -38,5 +42,12 @@ public class TurnManager {
 
 	public ArrayList<Player> getPlayers() {
 		return mPlayers;
+	}
+	
+	public void resetPlayers(){
+		for(Player p : mPlayers){
+			p.reset();
+		}
+		randomizePlayers();
 	}
 }

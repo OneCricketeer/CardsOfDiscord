@@ -3,6 +3,7 @@ package edu.rosehulman.csse.cardsofdiscord.model;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import android.util.Log;
 
@@ -97,6 +98,7 @@ public class CardManager {
 	}
 
 	public ArrayList<Card> getJudgeOptions() {
+		Collections.shuffle(mJudgeOptions);
 		return mJudgeOptions;
 	}
 

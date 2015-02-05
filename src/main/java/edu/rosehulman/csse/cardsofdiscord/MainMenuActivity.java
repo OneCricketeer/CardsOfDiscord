@@ -57,6 +57,8 @@ public class MainMenuActivity extends BaseActivity implements View.OnClickListen
                 startActivity(intent);
             	break;
             case R.id.lan_button:
+            	Intent intent2 = new Intent(MainMenuActivity.this, SampleTestWhatever.class);
+                startActivity(intent2);
             	Log.i(TAG, "LAN Game");
             	break;
             case R.id.online_game_button:

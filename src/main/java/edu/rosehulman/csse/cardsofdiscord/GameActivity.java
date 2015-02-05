@@ -10,13 +10,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
-import edu.rosehulman.csse.cardsofdiscord.CardSelectionFragment.OnFragmentInteractionListener;
+import edu.rosehulman.csse.cardsofdiscord.CardSelectionFragment.OnCardSelectedListener;
 import edu.rosehulman.csse.cardsofdiscord.model.Card;
 import edu.rosehulman.csse.cardsofdiscord.model.Player;
 
 public class GameActivity extends BaseFragmentActivity implements
 		HandDeviceFragment.OnDeviceHandedListener,
-		OnFragmentInteractionListener {
+		OnCardSelectedListener,
+		GameOverFragment.OnNewGameListener {
 
 	public static final int STATE_HAND_DEVICE = 0;
 	public static final int STATE_CARD_SELECT = 1;
@@ -37,6 +38,7 @@ public class GameActivity extends BaseFragmentActivity implements
 			break;
 		case STATE_CARD_SELECT:
 			f = new CardSelectionFragment();
+			break;
 		default:
 			break;
 		}
@@ -64,7 +66,6 @@ public class GameActivity extends BaseFragmentActivity implements
 		mState = STATE_CARD_SELECT;
 		FragmentManager fm = getSupportFragmentManager();
 		FragmentTransaction ft = fm.beginTransaction();
-		// CardSelectionFragment f = new CardSelectionFragment();
 		CardSelectionFragment f = CardSelectionFragment.newInstance(
 				getBlackCard(), getWhiteCards());
 		ft.replace(R.id.container, f);
@@ -87,9 +88,26 @@ public class GameActivity extends BaseFragmentActivity implements
 		mState = STATE_HAND_DEVICE;
 		FragmentManager fm = getSupportFragmentManager();
 		FragmentTransaction ft = fm.beginTransaction();
-		HandDeviceFragment f = HandDeviceFragment
-				.newInstance(getCurrentPlayerName());
-		ft.replace(R.id.container, f);
+		Fragment f = null;
+		if (mGameController.isGameOver()){
+			f = GameOverFragment.newInstance(mGameController.getWinners());
+		}else{
+			f = HandDeviceFragment
+					.newInstance(getCurrentPlayerName());
+		}
+		
+		ft.replace(R.id.container, f);			
+		ft.commit();
+	}
+
+	@Override
+	public void onNewGame() {
+		mGameController.playAgain();		
+		FragmentManager fm = getSupportFragmentManager();
+		FragmentTransaction ft = fm.beginTransaction();
+		Fragment f =  HandDeviceFragment
+					.newInstance(getCurrentPlayerName());		
+		ft.replace(R.id.container, f);			
 		ft.commit();
 	}
 

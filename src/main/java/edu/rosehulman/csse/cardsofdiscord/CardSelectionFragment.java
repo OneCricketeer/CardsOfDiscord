@@ -5,7 +5,13 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -13,6 +19,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import edu.rosehulman.csse.cardsofdiscord.model.Card;
@@ -21,7 +28,7 @@ import edu.rosehulman.csse.cardsofdiscord.view.CircleView;
 
 public class CardSelectionFragment extends Fragment {
 
-	private OnFragmentInteractionListener mListener;
+	private OnCardSelectedListener mListener;
 	public static final String ARG_BLACK_CARD = "ARG_BLACK_CARD";
 	public static final String ARG_WHITE_CARDS = "ARG_WHITE_CARDS";
 
@@ -74,16 +81,45 @@ public class CardSelectionFragment extends Fragment {
 				false);
 
 		// exitButton
+		v.findViewById(R.id.quit_game_button).setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				DialogFragment df = new DialogFragment(){
+					@Override
+					@NonNull
+					public Dialog onCreateDialog(Bundle savedInstanceState) {
+						AlertDialog.Builder b = new AlertDialog.Builder(getActivity());
+						b.setMessage("Are you sure you want to quit this game?");
+						b.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+							
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								Intent i = new Intent(getActivity(),MainMenuActivity.class);
+								getActivity().startActivity(i);
+								getActivity().finish();
+							}
+						});
+						
+						b.setNegativeButton(android.R.string.no, null);
+						
+						return b.create();
+					}
+				};
+				df.show(getFragmentManager(), "Are you sure");
+			}
+		});
 
 		// black card text
 		TextView blackCardTxt = (TextView) v.findViewById(R.id.black_card_text);
-		blackCardTxt.setText(mBlackCard.getContent().trim());
+		blackCardTxt.setText("While the United States raced the Soviet Union to the moon, the Mexican government funneled millions of pesos into research on __________.");//mBlackCard.getContent().trim());
 
 		// viewpager
 		mPager = (ViewPager) v.findViewById(R.id.pager);
 		int margin = (int) TypedValue.applyDimension(
 				TypedValue.COMPLEX_UNIT_DIP, 20 * 2, getResources()
 						.getDisplayMetrics());
+		mWhiteCards.add(0,new Card(10000, true, true, "Glenn Beck convulsively vomiting as a brood of crab spiders hatches in his brain and erupts from his tear ducts."));
 		mPager.setPageMargin(-margin);
 		mPagerAdapter = new CardPagerAdapter(getChildFragmentManager(),
 				mWhiteCards, mListener);
@@ -100,6 +136,7 @@ public class CardSelectionFragment extends Fragment {
 			CircleView cv = new CircleView(activity);
 			cv.setPlayerName(names.get(i++));
 			cv.setPlayerScore(p.getScore());
+			cv.setJudge(activity.mGameController.isJudging(p));
 			scroller.addView(cv);
 		}
 		return v;
@@ -137,7 +174,7 @@ public class CardSelectionFragment extends Fragment {
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
 		try {
-			mListener = (OnFragmentInteractionListener) activity;
+			mListener = (OnCardSelectedListener) activity;
 		} catch (ClassCastException e) {
 			throw new ClassCastException(activity.toString()
 					+ " must implement OnFragmentInteractionListener");
@@ -150,7 +187,7 @@ public class CardSelectionFragment extends Fragment {
 		mListener = null;
 	}
 
-	public interface OnFragmentInteractionListener {
+	public interface OnCardSelectedListener {
 
 		public void onCardsSelected(Card card);
 	}

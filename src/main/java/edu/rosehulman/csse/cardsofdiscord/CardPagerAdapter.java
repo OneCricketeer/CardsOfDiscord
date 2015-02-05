@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.util.Log;
 import android.view.View;
-import edu.rosehulman.csse.cardsofdiscord.CardSelectionFragment.OnFragmentInteractionListener;
+import edu.rosehulman.csse.cardsofdiscord.CardSelectionFragment.OnCardSelectedListener;
 import edu.rosehulman.csse.cardsofdiscord.model.Card;
 
 public class CardPagerAdapter extends FragmentStatePagerAdapter {
@@ -27,13 +27,13 @@ public class CardPagerAdapter extends FragmentStatePagerAdapter {
 	}
 
 	private ArrayList<Card> mWhiteCards;
-	private OnFragmentInteractionListener mListener;
+	private OnCardSelectedListener mListener;
 
 	public CardPagerAdapter(FragmentManager fm) {
 		this(fm, new ArrayList<Card>(),null);
 	}
 
-	public CardPagerAdapter(FragmentManager fm, ArrayList<Card> cards, OnFragmentInteractionListener mListener) {
+	public CardPagerAdapter(FragmentManager fm, ArrayList<Card> cards, OnCardSelectedListener mListener) {
 		super(fm);
 		this.mWhiteCards = cards;
 		this.mListener = mListener;

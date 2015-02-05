@@ -94,7 +94,7 @@ public class SessionManager {
 //	}
 
 	public synchronized boolean isDiscordMode() {
-		return mPrefs.getBoolean(DISCORD_MODE, false);
+		return mPrefs.getBoolean(DISCORD_MODE, true);
 	}
 
 	public synchronized void setDiscordMode(boolean discordMode) {

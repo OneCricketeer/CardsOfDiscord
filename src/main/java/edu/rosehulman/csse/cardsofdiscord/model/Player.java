@@ -2,10 +2,13 @@ package edu.rosehulman.csse.cardsofdiscord.model;
 
 import java.util.ArrayList;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by moorejm on 1/25/2015.
  */
-public class Player {
+public class Player implements Parcelable {
     private String name;
     private int score;
     private ArrayList<Card> hand;
@@ -18,6 +21,10 @@ public class Player {
     	this();
         this.name = name;
     }
+    
+	public Player(Parcel in) {
+		readFromParcel(in);
+	}
     
     public String getName() {
 		return name;
@@ -42,7 +49,27 @@ public class Player {
     public void playCard(Card card){
     	hand.remove(card);
     }
+    
+	@Override
+	public int describeContents() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeString(name);
+		dest.writeInt(score);
+		dest.writeList(hand);
+	}
+
+	@SuppressWarnings("unchecked")
+	private void readFromParcel(Parcel in) {
+		this.name = in.readString();
+		this.score = in.readInt();
+		this.hand = (ArrayList<Card>) in.readArrayList(Card.class.getClassLoader());
+	}
+    
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -75,6 +102,25 @@ public class Player {
 		if (score != other.score)
 			return false;
 		return true;
+	}
+	
+	public static final Parcelable.Creator<Player> CREATOR = new Parcelable.Creator<Player>() {
+
+		@Override
+		public Player createFromParcel(Parcel in) {
+			return new Player(in);
+		}
+
+		@Override
+		public Player[] newArray(int size) {
+			return new Player[size];
+		}
+
+	};
+
+	public void reset() {
+		this.score = 0;
+		this.hand.clear();
 	}
     
 }

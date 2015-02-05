@@ -57,7 +57,6 @@ public class Card implements Parcelable{
 		this.mIsBlack = (boolean) in.readValue(Boolean.class.getClassLoader());
 		this.mIsMature = (boolean) in.readValue(Boolean.class.getClassLoader());
 		this.mContent = in.readString();
-
 	}
 
 	@Override

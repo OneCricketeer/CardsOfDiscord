@@ -48,6 +48,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="edu.rosehulman.csse.cardsofdiscord.MainMenuActivity" />
         </activity>
+        <activity
+            android:name=".SampleTestWhatever"
+            android:label="@string/title_activity_game"
+            android:parentActivityName=".MainMenuActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="edu.rosehulman.csse.cardsofdiscord.MainMenuActivity" />
+        </activity>
     </application>
 
 </manifest>
