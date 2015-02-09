@@ -30,7 +30,9 @@ public class CircleView extends RelativeLayout {
 
 
 
-	private static int RADIUS = 42;
+	private int RADIUS = 58;
+
+	private RelativeLayout mCircleTextWrapper;
 
 	public CircleView(Context context) {
 		this(context, null);
@@ -58,10 +60,12 @@ public class CircleView extends RelativeLayout {
         mPlayerName = (TextView) findViewById(R.id.playerNameViewId);
         mPlayerScore = (TextView) findViewById(R.id.playerScore);
         mWhiteCircle = (TextView) findViewById(R.id.whiteCircleId);
+        mCircleTextWrapper = (RelativeLayout) findViewById(R.id.circleTextWrapper);
 
         updateWhiteCircleView();
 		updatePlayerCircleView();
 		updateScoreCircleView();
+		updateWrapper();
 	}
 
 
@@ -70,12 +74,20 @@ public class CircleView extends RelativeLayout {
 		return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp,
 				r.getDisplayMetrics());
 	}
+	
+	private void updateWrapper(){
+		int w = SP_to_PX(RADIUS);
+		int padd = RADIUS / 4;
+		LayoutParams lp = new RelativeLayout.LayoutParams(w-padd, w-padd);		
+		lp.setMargins(0, padd, padd, -padd);
+		mCircleTextWrapper.setLayoutParams(lp);
+	}
 
 	private void updatePlayerCircleView() {
 		int w = SP_to_PX(RADIUS);
 		LayoutParams lp = new RelativeLayout.LayoutParams(w, w);
-		int padd = RADIUS / 4;
-		lp.setMargins(0, padd, padd, 0);
+//		int padd = RADIUS / 4;
+//		lp.setMargins(0, padd, padd, 0);
 		mPlayerName.setLayoutParams(lp);
 	}
 	
@@ -83,8 +95,8 @@ public class CircleView extends RelativeLayout {
 		mWhiteCircle.setBackground(mPlayerCircle);
 		int w = SP_to_PX(RADIUS);
 		LayoutParams lp = new RelativeLayout.LayoutParams(w, w);
-		int padd = RADIUS / 4;
-		lp.setMargins(0, padd, padd, 0);
+//		int padd = RADIUS / 4;
+//		lp.setMargins(0, padd, padd, 0);
 		mWhiteCircle.setLayoutParams(lp);
 	}
 
@@ -95,7 +107,7 @@ public class CircleView extends RelativeLayout {
 		int w = SP_to_PX(RADIUS / 2);
 		LayoutParams lp = new RelativeLayout.LayoutParams(w, w);
 
-		lp.addRule(ALIGN_RIGHT, mPlayerName.getId());
+		lp.addRule(ALIGN_RIGHT, mCircleTextWrapper.getId());
 
 		int padd = -RADIUS / 4;
 		lp.setMargins(0, 0, padd, 0);
@@ -130,9 +142,9 @@ public class CircleView extends RelativeLayout {
     	int size = Math.min(widthMeasureSpec, heightMeasureSpec);
         setMeasuredDimension(size, size);
         
-        RADIUS = getHeight()/2;
+        RADIUS = size/2;
 		
-		Log.d("onMeasure", getHeight() + "");
+		Log.d("onMeasure", size + "");
     }
     
     @Override
@@ -140,6 +152,7 @@ public class CircleView extends RelativeLayout {
     	updateWhiteCircleView();
 		updatePlayerCircleView();
 		updateScoreCircleView();
+		updateWrapper();
 		
 		Log.d("onDraw", getHeight() + "");
     }

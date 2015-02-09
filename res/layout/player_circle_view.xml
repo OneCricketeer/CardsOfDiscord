@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" 
     android:id="@+id/player_circle_root_view"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:background="@null"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
     
-    <TextView
+    <RelativeLayout 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:id="@+id/circleTextWrapper">
+     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/circle_drawable"
@@ -20,7 +25,9 @@
         android:background="@drawable/circle_drawable"
         android:textColor="@color/black"
         android:gravity="center"
-        android:id="@id/playerNameViewId" />
+        android:id="@id/playerNameViewId" /> 
+        
+    </RelativeLayout>
 
     <TextView
         android:layout_width="wrap_content"
@@ -31,6 +38,6 @@
         android:textSize="12sp"
         android:gravity="center"
         android:layout_alignParentTop="true"
-        android:layout_alignRight="@id/playerNameViewId"
+        android:layout_alignRight="@id/circleTextWrapper"
         android:id="@+id/playerScore" />
 </RelativeLayout>

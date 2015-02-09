@@ -11,6 +11,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
@@ -21,7 +22,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.RelativeLayout.LayoutParams;
 import edu.rosehulman.csse.cardsofdiscord.model.Card;
 import edu.rosehulman.csse.cardsofdiscord.model.Player;
 import edu.rosehulman.csse.cardsofdiscord.view.CircleView;
@@ -72,6 +75,30 @@ public class CardSelectionFragment extends Fragment {
 			}
 		}
 	}
+	
+	@Override
+	public void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		
+		LinearLayout scroller = (LinearLayout) getView()
+				.findViewById(R.id.player_scores_scroller);
+		GameActivity activity = (GameActivity) getActivity();
+		ArrayList<String> names = getShortPlayerNames(
+				activity.getPlayers(), 3);
+		int i = 0;
+		for (Player p : activity.getPlayers()) {
+			CircleView cv = new CircleView(activity);
+			cv.setPlayerName(names.get(i++));
+			cv.setPlayerScore(p.getScore());
+			LayoutParams lp = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+			cv.setLayoutParams(lp);
+			cv.setJudge(activity.mGameController.isJudging(p));
+			scroller.addView(cv);
+			cv.invalidate();
+		}
+		scroller.invalidate();
+	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -112,33 +139,34 @@ public class CardSelectionFragment extends Fragment {
 
 		// black card text
 		TextView blackCardTxt = (TextView) v.findViewById(R.id.black_card_text);
-		blackCardTxt.setText("While the United States raced the Soviet Union to the moon, the Mexican government funneled millions of pesos into research on __________.");//mBlackCard.getContent().trim());
+		blackCardTxt.setText(mBlackCard.getContent().trim());
 
 		// viewpager
 		mPager = (ViewPager) v.findViewById(R.id.pager);
 		int margin = (int) TypedValue.applyDimension(
 				TypedValue.COMPLEX_UNIT_DIP, 20 * 2, getResources()
 						.getDisplayMetrics());
-		mWhiteCards.add(0,new Card(10000, true, true, "Glenn Beck convulsively vomiting as a brood of crab spiders hatches in his brain and erupts from his tear ducts."));
 		mPager.setPageMargin(-margin);
 		mPagerAdapter = new CardPagerAdapter(getChildFragmentManager(),
 				mWhiteCards, mListener);
 		mPager.setAdapter(mPagerAdapter);
 
 		// player scores
-		LinearLayout scroller = (LinearLayout) v
-				.findViewById(R.id.player_scores_scroller);
-		GameActivity activity = (GameActivity) getActivity();
-		ArrayList<String> names = getShortPlayerNames(
-				activity.getPlayers(), 3);
-		int i = 0;
-		for (Player p : activity.getPlayers()) {
-			CircleView cv = new CircleView(activity);
-			cv.setPlayerName(names.get(i++));
-			cv.setPlayerScore(p.getScore());
-			cv.setJudge(activity.mGameController.isJudging(p));
-			scroller.addView(cv);
-		}
+//		LinearLayout scroller = (LinearLayout) v
+//				.findViewById(R.id.player_scores_scroller);
+//		GameActivity activity = (GameActivity) getActivity();
+//		ArrayList<String> names = getShortPlayerNames(
+//				activity.getPlayers(), 3);
+//		int i = 0;
+//		for (Player p : activity.getPlayers()) {
+//			CircleView cv = new CircleView(activity);
+//			cv.setPlayerName(names.get(i++));
+//			cv.setPlayerScore(p.getScore());
+//			LayoutParams lp = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+//			cv.setLayoutParams(lp);
+//			cv.setJudge(activity.mGameController.isJudging(p));
+//			scroller.addView(cv);
+//		}
 		return v;
 	}
 

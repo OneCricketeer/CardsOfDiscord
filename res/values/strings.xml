@@ -34,5 +34,6 @@
     <string name="favorite_food_truck">My favorite food truck is _____.</string>
     <string name="new_game">New Game</string>
     <string name="main_menu">Main Menu</string>
+    <string name="switch_to_mode">Switch to Mode</string>
 
 </resources>

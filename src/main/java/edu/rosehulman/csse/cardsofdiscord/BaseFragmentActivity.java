@@ -27,9 +27,9 @@ public abstract class BaseFragmentActivity extends FragmentActivity {
         Resources r = getResources();
         if (mPrefs.isDiscordMode()) {
             v.setBackgroundColor(r.getColor(R.color.black));
-//			this.setTheme(R.style.Theme_Black);
+        	this.setTheme(R.style.Theme_Discord);
         } else {
-//			this.setTheme(R.style.Theme_Green);
+			this.setTheme(R.style.Theme_Harmony);
             v.setBackgroundColor(r.getColor(R.color.green));
         }
     }

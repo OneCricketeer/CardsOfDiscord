@@ -7,8 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import edu.rosehulman.csse.cardsofdiscord.model.Card;
+import edu.rosehulman.csse.cardsofdiscord.util.SessionManager;
 
 public class CardFragment extends Fragment {
     private static final String ARG_CONTENT = "ARG_CONTENT";
@@ -51,6 +53,12 @@ public class CardFragment extends Fragment {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_card, container, false);
         TextView txt = (TextView) rootView.findViewById(R.id.white_card_text);
         txt.setText(mContent);
+        ImageView stroke = (ImageView) rootView.findViewById(R.id.card_rounded_stroke);
+        if (SessionManager.getInstance().isDiscordMode()){
+        	stroke.setImageResource(R.drawable.rounded_corner_black);
+        }else{
+        	stroke.setImageResource(R.drawable.rounded_corner_green);
+        }
         if (mListener != null) {
         	rootView.setOnClickListener(mListener);        	
         }

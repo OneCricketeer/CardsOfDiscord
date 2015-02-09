@@ -27,20 +27,14 @@
     <style name="AppTheme.NoTitle" parent="@android:style/Theme.NoTitleBar">
     </style>
 
-    <style name="Theme.Black" parent="AppTheme.NoTitle">
-        <item name="android:background">@color/black</item>
+    <style name="Theme.Discord" parent="@android:style/Theme.Holo.NoActionBar">
+       
     </style>
 
-    <style name="Theme.White" parent="AppTheme.NoTitle">
-        <item name="android:background">@color/white</item>
+    <style name="Theme.Harmony" parent="android:style/Theme.Holo.Light.NoActionBar">
+        
     </style>
     
-    <style name="Theme.Green" parent="AppTheme.NoTitle">
-        <item name="android:background">@color/green</item>
-    </style>
-    
-    <style name="Theme.Red" parent="AppTheme.NoTitle">
-        <item name="android:background">@color/red</item>
-    </style>
+   
 
 </resources>

@@ -9,5 +9,9 @@
         android:id="@+id/menu_legal"
         android:title="@string/legal">
     </item>
+    <item 
+        android:id="@+id/menu_change_mode" 
+        android:title="@string/switch_to_mode">
+    </item>
 
 </menu>
