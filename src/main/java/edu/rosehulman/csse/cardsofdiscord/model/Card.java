@@ -71,17 +71,10 @@ public class Card implements Parcelable{
 		return result;
 	}
 
-    public boolean isPickTwo() {
-        return mIsBlack && mContent.replaceAll(BLANK, "").length() == mContent.length() - 2*BLANK.length();
-    }
-
     public int getNumPicks() {
         if (mIsBlack) {
-            int val = Math.max(1, (mContent.length() - mContent.replaceAll(BLANK, "").length()) / BLANK.length());
-            Log.d("getNumPicks", Integer.toString(val));
-            return val;
+            return Math.max(1, (mContent.length() - mContent.replaceAll(BLANK, "").length()) / BLANK.length());
         } else {
-            Log.d("getNumPicks", ""+1);
             return 1;
         }
     }
