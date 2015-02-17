@@ -97,12 +97,32 @@ public class CardManager {
 		mJudgeOptions.add(whiteCard);
 	}
 
-	public ArrayList<Card> getJudgeOptions() {
-		Collections.shuffle(mJudgeOptions);
-		return mJudgeOptions;
+	public ArrayList<Card> getCombinedJudgeOptions() {
+        ArrayList<Card> judgeOptions = new ArrayList<Card>();
+        int picks = getCurrentBlackCard().getNumPicks();
+
+        for (int i = 0; i < mJudgeOptions.size(); i++) {
+            Card judgeCard = mJudgeOptions.get(i);
+            String content = (picks > 1) ? "[1] " : "";
+            if (i % picks == 0) {
+                Card combined_card = new Card(judgeCard.getId(), judgeCard.isBlack(),
+                        judgeCard.isMature(), content + judgeCard.getContent());
+                judgeOptions.add(combined_card);
+            } else {
+                Card someCard = judgeOptions.get(i / picks);
+                someCard.setContent(someCard.getContent() + "\n[" + ((i % picks) + 1) + "] " + judgeCard.getContent());
+            }
+        }
+
+		Collections.shuffle(judgeOptions);
+		return judgeOptions;
 	}
 
-	public void clearJudgeOptions() {
+    public ArrayList<Card> getJudgeOptions() {
+        return mJudgeOptions;
+    }
+
+    public void clearJudgeOptions() {
 		mJudgeOptions.clear();
 	}
 

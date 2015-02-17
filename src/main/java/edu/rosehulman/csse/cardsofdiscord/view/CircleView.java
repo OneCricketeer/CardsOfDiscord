@@ -144,7 +144,7 @@ public class CircleView extends RelativeLayout {
         
         RADIUS = size/2;
 		
-		Log.d("onMeasure", size + "");
+//		Log.d("onMeasure", size + "");
     }
     
     @Override
@@ -154,7 +154,7 @@ public class CircleView extends RelativeLayout {
 		updateScoreCircleView();
 		updateWrapper();
 		
-		Log.d("onDraw", getHeight() + "");
+//		Log.d("onDraw", getHeight() + "");
     }
 
 }

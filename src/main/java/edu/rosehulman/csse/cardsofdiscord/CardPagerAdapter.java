@@ -21,7 +21,9 @@ public class CardPagerAdapter extends FragmentStatePagerAdapter {
 		@Override
 		public void onClick(View v) {
 			mListener.onCardsSelected(mWhiteCards.get(mPosition));
-			Log.d("CLICK", ""+mPosition);			
+            v.setVisibility(View.GONE);
+//            mWhiteCards.remove(mPosition);
+            notifyDataSetChanged();
 		}
 	
 	}

@@ -49,7 +49,7 @@ public class GameController {
 
 	public ArrayList<Card> getCurrentHand() {
 		if (mTm.getCurrentJudge().equals(mTm.getCurrentPlayer())) {
-			return mCm.getJudgeOptions();
+			return mCm.getCombinedJudgeOptions();
 		}
 		return mTm.getCurrentPlayer().getHand();
 	}
@@ -88,7 +88,9 @@ public class GameController {
 			mTm.rotatePlayers();
 		}
 
-		mTm.rotatePlayers();
+        if (mCm.getJudgeOptions().size() % mCm.getCurrentBlackCard().getNumPicks() == 0) {
+		    mTm.rotatePlayers();
+        }
 	}
 
 	public boolean isGameOver() {

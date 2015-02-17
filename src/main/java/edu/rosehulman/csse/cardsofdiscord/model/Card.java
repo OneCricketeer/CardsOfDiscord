@@ -2,10 +2,12 @@ package edu.rosehulman.csse.cardsofdiscord.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 public class Card implements Parcelable{
 
-	private int mId;
+    public static final String BLANK = "__________";
+    private int mId;
 	private boolean mIsBlack;
 	private boolean mIsMature;
 	private String mContent;
@@ -63,38 +65,61 @@ public class Card implements Parcelable{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((mContent == null) ? 0 : mContent.hashCode());
 		result = prime * result + mId;
 		result = prime * result + (mIsBlack ? 1231 : 1237);
-		result = prime * result + (mIsMature ? 1231 : 1237);
+//		result = prime * result + (mIsMature ? 1231 : 1237);
 		return result;
 	}
 
+    public boolean isPickTwo() {
+        return mIsBlack && mContent.replaceAll(BLANK, "").length() == mContent.length() - 2*BLANK.length();
+    }
+
+    public int getNumPicks() {
+        if (mIsBlack) {
+            int val = Math.max(1, (mContent.length() - mContent.replaceAll(BLANK, "").length()) / BLANK.length());
+            Log.d("getNumPicks", Integer.toString(val));
+            return val;
+        } else {
+            Log.d("getNumPicks", ""+1);
+            return 1;
+        }
+    }
+
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
+//		if (this == obj)
+//			return true;
 		if (obj == null)
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
 		Card other = (Card) obj;
-		if (mContent == null) {
-			if (other.mContent != null)
-				return false;
-		} else if (!mContent.equals(other.mContent))
-			return false;
+//		if (mContent == null) {
+//			if (other.mContent != null)
+//				return false;
+//		} else if (!mContent.equals(other.mContent))
+//			return false;
 		if (mId != other.mId)
 			return false;
 		if (mIsBlack != other.mIsBlack)
 			return false;
-		if (mIsMature != other.mIsMature)
-			return false;
+//		if (mIsMature != other.mIsMature)
+//			return false;
 		return true;
 	}
 
-	public static final Parcelable.Creator<Card> CREATOR = new Parcelable.Creator<Card>() {
+    @Override
+    public String toString() {
+        return "Card{" +
+                "mId=" + mId +
+                ", mIsBlack=" + mIsBlack +
+                ", mIsMature=" + mIsMature +
+                ", mContent='" + mContent + '\'' +
+                '}';
+    }
+
+    public static final Parcelable.Creator<Card> CREATOR = new Parcelable.Creator<Card>() {
 
 		@Override
 		public Card createFromParcel(Parcel in) {
@@ -108,4 +133,7 @@ public class Card implements Parcelable{
 
 	};
 
+    public void setContent(String content) {
+        this.mContent = content;
+    }
 }

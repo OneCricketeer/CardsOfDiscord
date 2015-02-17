@@ -29,7 +29,6 @@ public class MainTitleView extends LinearLayout {
     }
     
     public void setDiscordMode(boolean b) {
-        Log.d("title-view", Boolean.toString(b));
         this.mIsDiscordMode = b;
         this.mDiscordTitle.setText(mIsDiscordMode ? R.string.discord : R.string.harmony);
     }

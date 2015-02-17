@@ -24,6 +24,8 @@ public class GameActivity extends BaseFragmentActivity implements
 
 	private int mState = STATE_HAND_DEVICE;
 
+    private int mWhiteCardPicksLeft;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -66,8 +68,10 @@ public class GameActivity extends BaseFragmentActivity implements
 		mState = STATE_CARD_SELECT;
 		FragmentManager fm = getSupportFragmentManager();
 		FragmentTransaction ft = fm.beginTransaction();
+        Card bCard = getBlackCard();
+        mWhiteCardPicksLeft = bCard.getNumPicks();
 		CardSelectionFragment f = CardSelectionFragment.newInstance(
-				getBlackCard(), getWhiteCards());
+				bCard, getWhiteCards());
 		ft.replace(R.id.container, f);
 		ft.commit();
 		if (mGameController.isJudging()) {
@@ -84,20 +88,27 @@ public class GameActivity extends BaseFragmentActivity implements
 	}
 
 	public void onCardsSelected(Card card) {
-		mGameController.playCard(card);
-		mState = STATE_HAND_DEVICE;
-		FragmentManager fm = getSupportFragmentManager();
-		FragmentTransaction ft = fm.beginTransaction();
-		Fragment f = null;
-		if (mGameController.isGameOver()){
-			f = GameOverFragment.newInstance(mGameController.getWinners());
-		}else{
-			f = HandDeviceFragment
-					.newInstance(getCurrentPlayerName());
-		}
-		
-		ft.replace(R.id.container, f);			
-		ft.commit();
+        boolean isJudging = mGameController.isJudging();
+		mGameController.playCard(card); // changes judge
+
+        if (mWhiteCardPicksLeft > 1 && !isJudging) {
+            mState = STATE_CARD_SELECT;
+            mWhiteCardPicksLeft--;
+        } else {
+            mState = STATE_HAND_DEVICE;
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+            Fragment f = null;
+            if (mGameController.isGameOver()){
+                f = GameOverFragment.newInstance(mGameController.getWinners());
+            }else{
+                f = HandDeviceFragment
+                        .newInstance(getCurrentPlayerName());
+            }
+
+            ft.replace(R.id.container, f);
+            ft.commit();
+        }
 	}
 
 	@Override
