@@ -14,7 +14,7 @@ import edu.rosehulman.csse.cardsofdiscord.util.SessionManager;
 
 public class CardFragment extends Fragment {
     private static final String ARG_CONTENT = "ARG_CONTENT";
-    private String mContent;
+    private Card mCard;
     private boolean isSelected;
     
     private CardPagerAdapter.CardClickListener mListener;
@@ -26,7 +26,7 @@ public class CardFragment extends Fragment {
     public static CardFragment newInstance(Card card) {
         CardFragment fragment = new CardFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_CONTENT, card.getContent());
+        args.putParcelable(ARG_CONTENT, card);
         fragment.setArguments(args);
         return fragment;
     }
@@ -39,11 +39,15 @@ public class CardFragment extends Fragment {
     	
     }
 
+    public Card getCard() {
+        return mCard;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mContent = getArguments().getString(ARG_CONTENT);
+            mCard = getArguments().getParcelable(ARG_CONTENT);
         }
     }
 
@@ -52,7 +56,7 @@ public class CardFragment extends Fragment {
                              Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_card, container, false);
         TextView txt = (TextView) rootView.findViewById(R.id.white_card_text);
-        txt.setText(mContent);
+        txt.setText(mCard.getContent());
         ImageView stroke = (ImageView) rootView.findViewById(R.id.card_rounded_stroke);
         if (SessionManager.getInstance().isDiscordMode()){
         	stroke.setImageResource(R.drawable.rounded_corner_black);

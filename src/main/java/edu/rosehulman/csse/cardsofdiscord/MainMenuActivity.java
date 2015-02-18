@@ -66,10 +66,10 @@ public class MainMenuActivity extends BaseActivity implements
 			startActivity(intent);
 			break;
 		case R.id.lan_button:
-			Intent intent2 = new Intent(MainMenuActivity.this,
-					SampleTestWhatever.class);
-			startActivity(intent2);
 			Log.i(TAG, "LAN Game");
+			Intent intent2 = new Intent(MainMenuActivity.this,
+					BluetoothLanActivity.class);
+			startActivity(intent2);
 			break;
 		case R.id.online_game_button:
 			Log.i(TAG, "Online Game");

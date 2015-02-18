@@ -8,12 +8,14 @@ import android.view.View;
 
 import edu.rosehulman.csse.cardsofdiscord.model.GameController;
 import edu.rosehulman.csse.cardsofdiscord.util.ApplicationController;
+import edu.rosehulman.csse.cardsofdiscord.util.BluetoothChatService;
 import edu.rosehulman.csse.cardsofdiscord.util.SessionManager;
 
 public abstract class BaseFragmentActivity extends FragmentActivity {
 
     protected final SessionManager mPrefs;
 	protected GameController mGameController;
+    protected BluetoothChatService mBtChatService;
 
     public BaseFragmentActivity() {
         this.mPrefs = SessionManager.getInstance();

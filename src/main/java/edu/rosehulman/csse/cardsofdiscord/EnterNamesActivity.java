@@ -89,7 +89,7 @@ public class EnterNamesActivity extends BaseActivity implements View.OnClickList
             case R.id.start_game_button:
                 ArrayList<String> names = getPlayerNames();
                 if (names != null) {
-                    Intent intent = new Intent(this, GameActivity.class);
+                    Intent intent = new Intent(this, LocalGameActivity.class);
                     GameController gc = ApplicationController.getGameController();
                     gc.newGame(names);
                     //intent.putStringArrayListExtra(GameActivity.KEY_PLAYER_NAMES, names);

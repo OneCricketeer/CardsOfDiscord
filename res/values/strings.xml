@@ -35,5 +35,6 @@
     <string name="new_game">New Game</string>
     <string name="main_menu">Main Menu</string>
     <string name="switch_to_mode">Switch to Mode</string>
+    <string name="title_activity_bluetooth_lan">BluetoothLanActivity</string>
 
 </resources>

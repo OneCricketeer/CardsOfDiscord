@@ -5,11 +5,13 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 
+import edu.rosehulman.csse.cardsofdiscord.util.BluetoothChatService;
 import edu.rosehulman.csse.cardsofdiscord.util.SessionManager;
 
 public abstract class BaseActivity extends Activity {
 
     protected final SessionManager mPrefs;
+    protected BluetoothChatService mBtChatService;
 
     public BaseActivity() {
         this.mPrefs = SessionManager.getInstance();

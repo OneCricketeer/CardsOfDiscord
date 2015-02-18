@@ -47,7 +47,7 @@ public class CardSelectionFragment extends Fragment {
 	private PagerAdapter mPagerAdapter;
 
 	private Card mBlackCard;
-	private ArrayList<Card> mWhiteCards;
+//	private ArrayList<Card> mWhiteCards;
 
 	public CardSelectionFragment() {
 		// Required empty public constructor
@@ -68,11 +68,11 @@ public class CardSelectionFragment extends Fragment {
 		super.onCreate(savedInstanceState);
 		if (getArguments() != null) {
 			mBlackCard = getArguments().getParcelable(ARG_BLACK_CARD);
-			mWhiteCards = getArguments()
-					.getParcelableArrayList(ARG_WHITE_CARDS);
-			if (mWhiteCards == null) {
-				mWhiteCards = new ArrayList<Card>();
-			}
+//			mWhiteCards = getArguments()
+//					.getParcelableArrayList(ARG_WHITE_CARDS);
+//			if (mWhiteCards == null) {
+//				mWhiteCards = new ArrayList<Card>();
+//			}
 		}
 	}
 	
@@ -147,8 +147,8 @@ public class CardSelectionFragment extends Fragment {
 				TypedValue.COMPLEX_UNIT_DIP, 20 * 2, getResources()
 						.getDisplayMetrics());
 		mPager.setPageMargin(-margin);
-		mPagerAdapter = new CardPagerAdapter(getChildFragmentManager(),
-				mWhiteCards, mListener);
+        ArrayList<CardFragment> fragments = ((GameActivity) getActivity()).getCardFragments();
+		mPagerAdapter = new CardPagerAdapter(getChildFragmentManager(), fragments, mListener);
 		mPager.setAdapter(mPagerAdapter);
 
 		// player scores
@@ -167,6 +167,7 @@ public class CardSelectionFragment extends Fragment {
 //			cv.setJudge(activity.mGameController.isJudging(p));
 //			scroller.addView(cv);
 //		}
+
 		return v;
 	}
 
@@ -217,7 +218,7 @@ public class CardSelectionFragment extends Fragment {
 
 	public interface OnCardSelectedListener {
 
-		public void onCardsSelected(Card card);
+		public void onCardsSelected(Integer position, Card card);
 	}
 
 }
