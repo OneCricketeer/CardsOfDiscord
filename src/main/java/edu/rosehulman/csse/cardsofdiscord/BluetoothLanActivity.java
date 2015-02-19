@@ -46,14 +46,13 @@ public class BluetoothLanActivity extends BaseActivity implements View.OnClickLi
 
     private boolean mIsServer;
     private Timer mPairedDevicesTimer = new Timer();
+    private StringBuffer mOutStringBuffer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lan_bluetooth);
-
-        mBtChatService = new BluetoothChatService(this, new BluetoothHandler(this));
+        showProgressBar(false);
 
         mFoundDevicesAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
 
@@ -103,10 +102,18 @@ public class BluetoothLanActivity extends BaseActivity implements View.OnClickLi
         Log.d(TAG, "ensure discoverable");
         if (mBtAdapter.getScanMode() != BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE) {
             mIsServer = true;
-            Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
-            discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
-            startActivity(discoverableIntent);
+            setBluetoothDiscoverable(120);
         }
+    }
+
+    private void setBluetoothDiscoverable(int seconds) {
+        Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
+        discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, seconds);
+        startActivity(discoverableIntent);
+    }
+
+    private void showProgressBar(boolean show) {
+        findViewById(android.R.id.progress).setVisibility(show ? View.VISIBLE : View.GONE);
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -118,10 +125,10 @@ public class BluetoothLanActivity extends BaseActivity implements View.OnClickLi
                     // Get the device MAC address
                     String address = data.getExtras()
                             .getString(EXTRA_DEVICE_ADDRESS);
-                    // Get the BLuetoothDevice object
+                    // Get the BluetoothDevice object
                     BluetoothDevice device = mBtAdapter.getRemoteDevice(address);
                     // Attempt to connect to the device
-//                    mChatService.connect(device);
+                    mBtChatService.connect(device);
                     Log.d(TAG, "Connect to device");
                 }
                 break;
@@ -129,12 +136,12 @@ public class BluetoothLanActivity extends BaseActivity implements View.OnClickLi
                 // When the request to enable Bluetooth returns
                 if (resultCode == Activity.RESULT_OK) {
                     // Bluetooth is now enabled, so set up a chat session
-//                    setupChat();
+                    setupChat();
                     Log.d(TAG, "Bluetooth enabled");
                 } else {
-                    // User did not enable Bluetooth or an error occured
+                    // User did not enable Bluetooth or an error occurred
                     Log.d(TAG, "Bluetooth not enabled");
-                    Toast.makeText(this, "Bluetooth not enabled. Leaving", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Bluetooth not enabled.", Toast.LENGTH_SHORT).show();
 //                    finish();
                 }
         }
@@ -151,12 +158,20 @@ public class BluetoothLanActivity extends BaseActivity implements View.OnClickLi
             startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
             // Otherwise, setup the chat session
         } else {
-//            if (mChatService == null) setupChat();
+            if (mBtChatService == null) setupChat();
             Toast.makeText(this, "SetupChat", Toast.LENGTH_SHORT).show();
         }
     }
 
+    private void setupChat() {
+        Log.d(TAG, "setupChat()");
 
+        // Initialize the BluetoothChatService to perform bluetooth connections
+        mBtChatService = new BluetoothChatService(this, new BluetoothHandler(this));
+
+        // Initialize the buffer for outgoing messages
+        mOutStringBuffer = new StringBuffer("");
+    }
 
     @Override
     protected void onDestroy() {
@@ -164,12 +179,12 @@ public class BluetoothLanActivity extends BaseActivity implements View.OnClickLi
 
         // Make sure we're not doing discovery anymore
         if (mBtAdapter != null) {
+            mPairedDevicesTimer.cancel();
             mBtAdapter.cancelDiscovery();
         }
 
         // Unregister broadcast listeners
         this.unregisterReceiver(mReceiver);
-        mPairedDevicesTimer.cancel();
     }
 
     /**
@@ -180,11 +195,7 @@ public class BluetoothLanActivity extends BaseActivity implements View.OnClickLi
         Log.d(TAG, "doDiscovery()");
 
         // Indicate scanning in the title
-        setProgressBarIndeterminateVisibility(true);
-//        setTitle(R.string.scanning);
-
-        // Turn on sub-title for new devices
-//        findViewById(R.id.title_new_devices).setVisibility(View.VISIBLE);
+        showProgressBar(true);
 
         // If we're already discovering, stop it
         if (mBtAdapter.isDiscovering()) {
@@ -207,14 +218,15 @@ public class BluetoothLanActivity extends BaseActivity implements View.OnClickLi
                 // Get the BluetoothDevice object from the Intent
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                 // If it's already paired, skip it, because it's been listed already
-                if (device.getBondState() != BluetoothDevice.BOND_BONDED) {
-                    mFoundDevicesAdapter.add(device.getName() + "\n" + device.getAddress());
+                Log.i(TAG, "FOUND DEVICE BONDED " + (device.getBondState() == BluetoothDevice.BOND_BONDED));
+                String deviceDetails = device.getName() + "\n" + device.getAddress();
+                mFoundDevicesAdapter.remove(deviceDetails);
+                mFoundDevicesAdapter.add(deviceDetails);
 
-                }
-                // When discovery is finished, change the Activity title
+//                }
+             // discovery is finished
             } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
-                setProgressBarIndeterminateVisibility(false);
-//                setTitle(R.string.select_device);
+                showProgressBar(false);
                 if (mFoundDevicesAdapter.getCount() == 0) {
                     String noDevices = "No devices found";
                     mFoundDevicesAdapter.add(noDevices);
@@ -307,6 +319,10 @@ public class BluetoothLanActivity extends BaseActivity implements View.OnClickLi
                 mFoundDevicesAdapter.add(device.getName() + "\n" + device.getAddress());
             }
             mFoundDevicesAdapter.notifyDataSetChanged();
+
+            boolean canStartGame = mFoundDevicesAdapter.getCount() >= 2;
+            findViewById(R.id.start_bt_game_button).setEnabled(canStartGame);
+
         }
     }
 }

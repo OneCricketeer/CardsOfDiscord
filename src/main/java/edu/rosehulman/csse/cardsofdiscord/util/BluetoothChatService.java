@@ -293,9 +293,9 @@ public class BluetoothChatService {
                     socket = serverSocket.accept();
                     if (socket != null) {
                         BluetoothDevice device = socket.getRemoteDevice();
-
                     	String address = device.getAddress();
 	                    mSockets.add(socket);
+                        Log.d(TAG, "ADDED device " + device.getName());
                         mDevices.add(device);
 	                    mDeviceAddresses.add(address);
 	                    connected(socket, socket.getRemoteDevice());

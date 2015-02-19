@@ -1,14 +1,14 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
     tools:context="edu.rosehulman.csse.cardsofdiscord.BluetoothLanActivity">
 
-
     <TextView
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Device Name: Android BT Name"
@@ -17,10 +17,12 @@
         android:id="@+id/bt_device_name_textview" />
 
     <LinearLayout
+        android:id="@+id/bt_game_action_buttons"
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
+        android:layout_below="@id/bt_device_name_textview"
         android:layout_height="wrap_content">
 
         <Button
@@ -37,37 +39,61 @@
             android:id="@+id/join_bt_game_button"
             android:layout_gravity="center_horizontal" />
 
-     </LinearLayout>
+    </LinearLayout>
 
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Available Devices"
-        android:textAllCaps="true"
-        style="@style/WhiteText"
-        android:textSize="16sp"
-        android:id="@+id/found_devices_list_title" />
-
-    <View
+    <LinearLayout
+        android:layout_below="@id/bt_game_action_buttons"
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@color/white"/>
+        android:orientation="vertical"
+        android:layout_height="match_parent">
 
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:id="@+id/found_devices_listview"/>
+        <RelativeLayout
+            android:id="@+id/bt_scanning_header"
+            android:layout_below="@id/bt_game_action_buttons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <Button
-        android:gravity="bottom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/start_game"
-        android:enabled="false"
-        android:id="@+id/start_bt_game_button"
-        android:layout_gravity="center_horizontal" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="Available Devices"
+                android:textAllCaps="true"
+                style="@style/WhiteText"
+                android:textSize="16sp"
+                android:id="@+id/found_devices_list_title" />
 
+            <ProgressBar
+                style="?android:attr/progressBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:id="@android:id/progress" />
 
-</LinearLayout>
+            <View
+                android:layout_below="@id/found_devices_list_title"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/white"/>
+
+        </RelativeLayout>
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="1"
+            android:layout_marginBottom="8dp"
+            android:id="@+id/found_devices_listview"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0"
+            android:text="@string/start_game"
+            android:enabled="false"
+            android:id="@+id/start_bt_game_button" />
+
+    </LinearLayout>
+
+</RelativeLayout>

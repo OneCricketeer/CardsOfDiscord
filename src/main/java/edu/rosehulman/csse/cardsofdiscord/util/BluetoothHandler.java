@@ -45,7 +45,7 @@ public class BluetoothHandler extends Handler {
                 // construct a string from the buffer
                 String writeMessage = new String(writeBuf);
                 // TODO: Interpret written message (from self)
-
+                Log.d(TAG, "MESSAGE_WRITE: " + writeMessage);
 //                mConversationArrayAdapter.add("Me:  " + writeMessage);
                 break;
             case BluetoothChatService.MESSAGE_READ:
@@ -54,15 +54,16 @@ public class BluetoothHandler extends Handler {
                 String readMessage = new String(readBuf, 0, msg.arg1);
                 // TODO: Interpret read message (from connection)
                 if (!readMessage.isEmpty()) {
+                    Log.d(TAG, "MESSAGE_READ: " + readMessage);
 //                    mConversationArrayAdapter.add(mConnectedDeviceName+":  " + readMessage);
                 }
                 break;
             case BluetoothChatService.MESSAGE_DEVICE_NAME:
                 // save the connected device's name
                 // TODO: Keep track of who we are connected to
-//                mConnectedDeviceName = msg.getData().getString(BluetoothChatService.DEVICE_NAME);
-//                Toast.makeText(getApplicationContext(), "Connected to "
-//                        + mConnectedDeviceName, Toast.LENGTH_SHORT).show();
+                String mConnectedDeviceName = msg.getData().getString(BluetoothChatService.DEVICE_NAME);
+                Toast.makeText(mContext, "Connected to "
+                        + mConnectedDeviceName, Toast.LENGTH_SHORT).show();
                 break;
             case BluetoothChatService.MESSAGE_TOAST:
                 //if (!msg.getData().getString(TOAST).contains("Unable to connect device")) {

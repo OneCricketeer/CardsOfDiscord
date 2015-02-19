@@ -30,13 +30,12 @@ public class EnterNamesActivity extends BaseActivity implements View.OnClickList
         setContentView(R.layout.activity_enter_names);
 
         mNameLayout = (LinearLayout) findViewById(R.id.names_list_layout);
-        
-        
-        String[] name = new String[] {"Teddy", "Jordan", "Nils"};
-        for (int i = 0; i < 3; i++) {
-        	View v = mNameLayout.getChildAt(i);
-        	((EditText) v).setText(name[i]);
-        }
+
+//        String[] name = new String[] {"Teddy", "Jordan", "Nils"};
+//        for (int i = 0; i < 3; i++) {
+//        	View v = mNameLayout.getChildAt(i);
+//        	((EditText) v).setText(name[i]);
+//        }
 
         enableButtons();
     }
