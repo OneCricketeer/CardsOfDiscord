@@ -26,6 +26,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.TreeSet;
 
+import edu.rosehulman.csse.cardsofdiscord.model.GameController;
+import edu.rosehulman.csse.cardsofdiscord.util.ApplicationController;
 import edu.rosehulman.csse.cardsofdiscord.util.BluetoothChatService;
 import edu.rosehulman.csse.cardsofdiscord.util.BluetoothHandler;
 
@@ -264,7 +266,12 @@ public class BluetoothLanActivity extends BaseActivity implements View.OnClickLi
             case R.id.start_bt_game_button:
                 mPairedDevicesTimer.cancel();
                 if (findViewById(R.id.start_bt_game_button).isEnabled()) {
-
+                    Intent intent = new Intent(this, LanGameActivity.class);
+                    GameController gc = ApplicationController.getGameController();
+                    //gc.newGame(names);
+                    //intent.putStringArrayListExtra(GameActivity.KEY_PLAYER_NAMES, names);
+                    startActivity(intent);
+                    finish();
                 } else {
 
                 }

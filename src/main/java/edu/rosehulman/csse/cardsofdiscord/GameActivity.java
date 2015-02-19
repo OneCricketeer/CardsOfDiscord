@@ -29,28 +29,6 @@ public abstract class GameActivity extends BaseFragmentActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_game);
-
-		Fragment f = null;
-		switch (mState) {
-		case STATE_HAND_DEVICE:
-			if (!mGameController.getPlayers().isEmpty()) {
-				f = HandDeviceFragment.newInstance(getCurrentPlayerName());
-			}
-			break;
-		case STATE_CARD_SELECT:
-			f = new CardSelectionFragment();
-			break;
-		default:
-			break;
-		}
-
-		if (f != null) {
-			FragmentManager fm = getSupportFragmentManager();
-			FragmentTransaction ft = fm.beginTransaction();
-			ft.add(R.id.container, f);
-			ft.commit();
-		}
-
 	}
 
     @Override
